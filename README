@@ -1,3 +1,7 @@
 Python2.7 based code utilizing scikit-learn, pandas, numpy modules for comapring multiple supervised learning algorithms on pandas data frames.
 
+randomData.py: Generates 2*6 (positive and negative set) random features for binary classification.
 
+mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1
+
+mlCodeRandomDataPlots.py: Plots the importance of features in a given algorithm. Plots 2D for each feature and 3D for 2 chosen features.
