@@ -20,8 +20,8 @@ from itertools import cycle
 # -----------------------------------------------------------------------------
 
 target_names = np.array(['Negatives','Positives'])
-#target_names = np.array(['Positives','Negatives'])
 
+# call data frame with Nb = 50000 (negatives) and Ns - 10000 (positives)
 dfr = rd.rData(target_names,282679734,50000,10000,0.0)
 
 # Print first 25 rows of data frame
@@ -30,7 +30,7 @@ print dfr.head(25)
 # Create training and testing data frame based on value of 'isTrain' column
 train, test = dfr[dfr['isTrain']==True], dfr[dfr['isTrain']==False]
 
-# Choose columns containing observables from four distributions (columns 0,1,2,3)
+# Choose columns containing observables from four distributions (columns 0,1,2,3,4,5)
 features = dfr.columns[0:6]
 
 # Target values converted to integers for training and testing
@@ -41,6 +41,7 @@ testTargets = np.array(test['Targets']).astype(int)
 # Models --------------------------------------------
 # -----------------------------------------------------------------------------
 
+# list of model names
 names = [
     'Naive Bayes',
     'Random Forest', 
@@ -58,6 +59,8 @@ names = [
 
 Ntrees = 400
 
+
+# list of classifiers coresponding to the model names
 classifiers = [
     GaussianNB(),
     RandomForestClassifier(n_estimators=Ntrees,max_depth=None,n_jobs=-1,random_state=2746298),
@@ -73,8 +76,10 @@ classifiers = [
     AdaBoostClassifier(n_estimators=100)
     ]
 
+# initialize list for ploting
 FP, TP, PR, RC, AVG = [], [], [], [], []
 
+# loop over classifiers and calculate metrics
 for name, clf in zip(names, classifiers):
     y = clf.fit(train[features], trainTargets).predict(train[features])
     y_t =  clf.predict(test[features])
@@ -106,16 +111,14 @@ for name, clf in zip(names, classifiers):
     if hasattr(clf, "feature_importances_"):  
         if name == 'Random Forest':
             feature_importance1 = clf.feature_importances_
-            #feature_importance1 = 100.0 * (feature_importance1 / feature_importance1.max())
             sorted_idx1 = np.argsort(feature_importance1)
             pos1 = np.arange(sorted_idx1.shape[0]) + 0.5
         elif name == 'Gradient Boosting':
             feature_importance2 = clf.feature_importances_
-            #feature_importance2 = 100.0 * (feature_importance2 / feature_importance2.max())
             sorted_idx2 = np.argsort(feature_importance2)
             pos2 = np.arange(sorted_idx2.shape[0]) + 0.5
         
-    
+# print out metrics  
     print name, '---------------------------------------------' 
     print '%Matches = ', float(len(match))/len(trainTargets)
     print '%Mis-Matches = ', 1 - (float(len(match))/len(trainTargets))
@@ -133,12 +136,14 @@ for name, clf in zip(names, classifiers):
     print 'Confusion Matrix'
     print cm
 
+# create list of values to plot
     FP.append(fpos)  
     TP.append(tpos)
     PR.append(pre)
     RC.append(rc)
     AVG.append(average)
 
+# print list of model and corresponding 6 metric average
 print 'Model','         ', 'Score'
 for k in zip(names,AVG):
     print k
@@ -153,6 +158,7 @@ for k in zip(names,AVG):
 lines = ["-","--","-.",":"]
 linecycler = cycle(lines)
 
+# plot roc curves for all models in list
 plt.figure(1, figsize=(12,12)).patch.set_facecolor('white')
 for i in range(len(names)):
     plt.plot(FP[i], TP[i],next(linecycler),label=names[i])
@@ -162,9 +168,9 @@ plt.ylim([0.0, 1.0])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.legend(loc="lower right")
-#plt.savefig('/home/rmr/Sentinelhs/Paper/figures/roc_compare.eps', bbox_inches=0)
+#plt.savefig('/your/path/oc_compare.eps', bbox_inches=0)
 
-
+# plot precisionRecall curves for all models in list
 plt.figure(2, figsize=(12,12)).patch.set_facecolor('white')
 for i in range(len(names)):
     plt.plot(PR[i], RC[i],next(linecycler),label=names[i])
@@ -174,6 +180,7 @@ plt.ylim([0.0, 1.0])
 plt.xlabel('Precision')
 plt.ylabel('Recall')
 plt.legend(loc="lower left")
+#plt.savefig('/your/path/rpcurve.png', bbox_inches=0)
 
 
 # Observable importance of the Random Forest model 
@@ -183,7 +190,7 @@ plt.yticks(pos1, dfr.columns[sorted_idx1])
 plt.xlabel('% Relative Importance')
 plt.title('Variable Importance')
 plt.title('Random Forest')
-#plt.savefig('/home/rmr/Sentinelhs/Paper/figures/rfVariableImportance.eps', bbox_inches=0)
+#plt.savefig('/tour/path/rfVariableImportance.eps', bbox_inches=0)
 
 # Observable importance of the Boosted Gradiend model 
 plt.figure(4, figsize=(12,12)).patch.set_facecolor('white')
@@ -193,22 +200,4 @@ plt.xlabel('% Relative Importance')
 plt.title('Variable Importance')
 plt.title('Boosted Gradient')
 
-'''plt.figure(4, figsize=(12,12)).patch.set_facecolor('white')
-plt.hist([P0[0], P1[0]], 100, histtype='step', label=['Neg', 'Pos'])
-plt.legend()
-
-plt.figure(5, figsize=(12,12)).patch.set_facecolor('white')
-plt.plot(P0[0], P1[0], label=['Neg', 'Pos'])
-plt.legend()'''
-
 plt.show()
-
-# -----------------------------------------------------------------------------
-# Apply Models to data --------------------------------------------------------
-# -----------------------------------------------------------------------------
-# model systematics
-#X = np.array([0.012044,0.132686,2.784292,-1.76755])
-#X = np.array([0.947608,0.896373,5.737867,1.859890])
-#X = train[features]
-
-#print clf.predict(X)

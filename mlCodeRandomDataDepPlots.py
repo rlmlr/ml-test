@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import randomData as rd
-from itertools import cycle
 import pylab as pl
 from mpl_toolkits.mplot3d import Axes3D
 # -----------------------------------------------------------------------------
@@ -28,7 +27,7 @@ trainTargets = np.array(train['Targets']).astype(int)
 testTargets = np.array(test['Targets']).astype(int)
 
 # -----------------------------------------------------------------------------
-# Models --------------------------------------------
+# Model  ----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
 names = dfr.columns[0:6].tolist()
@@ -66,7 +65,6 @@ prec = tp/(tp+fp)
 mcorr = (tp*tn-fp*fn)/np.sqrt((tp+fp)*(tp+fn)*(tn+fp)*(tn+fn))  
 f1 = 2*tp/(2*tp+fn+fp)
 rms = np.sqrt(sum([(float(i) - float(j))**2 for i,j in zip(testTargets, y_t)])/len(y_t))
-#ll = -sum([i*np.log(float(j))+(1-i)*np.log(1-float(j)) for i,j in zip(testTargets,prob[:,1])])/len(y_t)
 ll = log_loss(testTargets, prob)
 average = (roc_auc+acc+recall+prec+mcorr+f1)/6
     
@@ -91,6 +89,10 @@ print 'Average = ', average
 print 'Confusion Matrix'
 print cm
 
+# -----------------------------------------------------------------------------
+# Plots -----------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 fig1, axs = plot_partial_dependence(clf, train[features], features[0:6], feature_names=names, n_jobs=-1, grid_resolution=50,facecolor='white')
 fig1.suptitle('None')
 pl.subplots_adjust(top=0.9) 
@@ -106,51 +108,5 @@ surf = ax.plot_surface(XX, YY, Z, rstride=1, cstride=1, cmap=pl.cm.BuPu)
 ax.set_xlabel(names[target_feature[0]])
 ax.set_ylabel(names[target_feature[1]])
 ax.set_zlabel('Partial dependence')
-#  pretty init view
-'''ax.view_init(elev=22, azim=122)
-pl.colorbar(surf)
-pl.suptitle('Partial dependence of house value on median age and '
-            'average occupancy')
-pl.subplots_adjust(top=0.9)'''
-# -----------------------------------------------------------------------------
-# Plots -----------------------------------------------------------------------
-# -----------------------------------------------------------------------------
 
-#colormap = plt.cm.gist_ncar
-#plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, len(names))])
-'''
-lines = ["-","--","-.",":"]
-linecycler = cycle(lines)
-
-plt.figure(1, figsize=(12,12)).patch.set_facecolor('white')
-plt.plot(fp, tp,'-b',label=name)
-plt.plot([0, 1], [0, 1], 'k-.')
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.0])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Gradient Boosting ROC Curve')
-plt.legend(loc="lower right")
-#plt.savefig('/home/rmr/Sentinelhs/Paper/figures/roc_compare.eps', bbox_inches=0)
-
-
-plt.figure(2, figsize=(12,12)).patch.set_facecolor('white')
-plt.plot(pre, rc,'-b',label=name)
-plt.plot(0.5*np.ones(len(pre)), 'k-.')
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.0])
-plt.xlabel('Precision')
-plt.ylabel('Recall')
-plt.legend(loc="lower left")
-
-
-# Observable importance of the Random Forest model 
-plt.figure(3, figsize=(12,12)).patch.set_facecolor('white')
-plt.barh(pos, feature_importance[sorted_idx], align='center')
-plt.yticks(pos, dfr.columns[sorted_idx])
-plt.xlabel('% Relative Importance')
-plt.title('Variable Importance')
-plt.title('Gradient Boosting')
-#plt.savefig('/home/rmr/Sentinelhs/Paper/figures/rfVariableImportance.eps', bbox_inches=0)
-'''
 plt.show()
