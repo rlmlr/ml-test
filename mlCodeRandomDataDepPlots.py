@@ -15,7 +15,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 target_names = np.array(['Negatives','Positives'])
 
-dfr = rd.rData(target_names,282679734,50000,10000,0.0)
+dfr = rd.rData(target_names,282679734,50000,10000)
 
 print dfr.head(25)
 

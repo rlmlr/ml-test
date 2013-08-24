@@ -22,7 +22,7 @@ from itertools import cycle
 target_names = np.array(['Negatives','Positives'])
 
 # call data frame with Nb = 50000 (negatives) and Ns - 10000 (positives)
-dfr = rd.rData(target_names,282679734,50000,10000,0.0)
+dfr = rd.rData(target_names,282679734,50000,10000)
 
 # Print first 25 rows of data frame
 print dfr.head(25)

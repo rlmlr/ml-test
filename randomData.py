@@ -6,7 +6,7 @@ from sklearn import preprocessing
 # Randomly generated data: Training/Testing -----------------------------------
 # -----------------------------------------------------------------------------
 
-def rData(tn, seed, N0, N1, ep): 
+def rData(tn, seed, N0, N1): 
 
 	np.random.seed(seed) # set random seed
 
@@ -14,10 +14,10 @@ def rData(tn, seed, N0, N1, ep):
 	Nb = N0 # Number of negatives
 
 	# Observables for positives
-	s1 = np.random.normal(1.2-ep*1.2,1.0,Ns) # normal distribution
-	s2 = np.random.gamma(1.5-ep*1.5,2,Ns) # gamma distribution
-	s3 = np.random.beta(1.5-ep*1.5,1.0,Ns) # beta distribution
-	s4 = np.random.exponential(0.5-ep*0.5,Ns) # exponential distribution
+	s1 = np.random.normal(1.2,1.0,Ns) # normal distribution
+	s2 = np.random.gamma(1.5,2,Ns) # gamma distribution
+	s3 = np.random.beta(1.5,1.0,Ns) # beta distribution
+	s4 = np.random.exponential(0.5,Ns) # exponential distribution
 	s5 = np.hstack((np.ones(0.90*Ns),np.zeros(0.1*Ns))) # binary
 	s6 = np.hstack((np.zeros(0.35*Ns),1*np.ones(0.15*Ns),2*np.ones(0.1*Ns),3*np.ones(0.4*Ns))) # quadtrary 
 	s7 = np.ones(Ns) # Positive target value  = 1
