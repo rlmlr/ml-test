@@ -6,6 +6,8 @@ mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on 
 
 mlCodeRandomDataPlots.py: Plots the importance of features for a given algorithm (GradientBoosted). Plots 2D for each feature and 3D for 2 chosen features.
 
+See WIKI for sample plots.
+
 Modules:
 
 scikit-learn:  http://scikit-learn.org/
