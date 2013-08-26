@@ -29,4 +29,6 @@ Add methods to tune model parameters and test stability of models.
 
 Expand random data set allow for more features. Add text and image data. All so, use standard data sets to compare models.
 
+Add internet interface to extract and model data grabbed of the internet.
+
 Add neural network models (need suggesgtions for pyhton module).  
