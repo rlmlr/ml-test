@@ -2,6 +2,8 @@ Python2.7 code utilizing scikit-learn, pandas, matplotlib, and numpy modules for
 
 randomData.py: Generates data frame containing 2*6 (positive and negative set) random features for binary classification. Data is split into 75% training and 25% testing sets and then randomized.
 
+randomDataPlot.py: Plots positive and negatives features in 2D histograms and plots scatter plots with correlation coefficients for all combination of features..
+
 mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1. Plots ROC and PrecisionRecall curves in 2 figures and plots histogram of importance for RandomForest and GradientBoosted models.
 
 mlCodeRandomDataPlots.py: Plots the importance of features for a given algorithm (GradientBoosted). Plots 2D for each feature and 3D for 2 chosen features.
