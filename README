@@ -4,7 +4,7 @@ randomData.py: Generates data frame containing 2*6 (positive and negative set) r
 
 randomDataPlot.py: Plots positive and negatives features in 2D histograms and plots scatter plots with correlation coefficients for all combination of features..
 
-mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1. Plots ROC and PrecisionRecall curves in 2 figures and plots histogram of importance for RandomForest and GradientBoosted models.
+mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1. Plots ROC and PrecisionRecall curves in 2 figures and plots histogram (barplots) of importance for decision tree based  models.
 
 mlCodeRandomDataPlots.py: Plots the importance of features for a given algorithm (GradientBoosted). Plots 2D for each feature and 3D for 2 chosen features.
 
@@ -25,7 +25,7 @@ R.Caruana and A.Niculescu-Mizil. "An empirical comparison of supervised learning
 
 To Do:
 
-Add methods to tune model parameters and test stability of models. 
+Add methods to tune model parameters and test stability of models. (All most done)
 
 Expand random data set allow for more features. Add text and image data. All so, use standard data sets to compare models.
 
