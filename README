@@ -6,11 +6,13 @@ randomDataPlot.py: Plots positive and negatives features in 2D histograms and pl
 
 mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1. Plots ROC and PrecisionRecall curves in 2 figures and plots histogram (barplots) of importance for decision tree based  models.
 
-mlCodeRandoDataTuneParameters.py: Uses cross-validation to find model parameters that give thr highest accuracy score. Cross-validation splits the total data se into K-1 training sets and 1 test set. The test set is tested against each traing site and the average accuracy score is used to find the best model parameters. The next version will have plots of score vs parameter with a standard deviation band. 
+mlCodeRandoDataTuneParameters.py: Uses cross-validation to find model parameters that give thr highest accuracy score. Cross-validation splits the total data set into K-1 training sets and 1 test set. The test set is tested against each traing set and the average accuracy score is used to find the best model parameters. The next version will have plots of score vs parameter with a standard deviation band. This is currently done, but very slow, I just need to add a model selection function.  
 
 mlCodeRandomDataPlots.py: Plots the importance of features for a given algorithm (GradientBoosted). Plots 2D for each feature and 3D for 2 chosen features.
 
+-------------------------------------------------------------------------------------------------------------------------------------------------
 See WIKI for sample plots.
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 Modules:
 
@@ -35,6 +37,8 @@ Add internet interface to extract and model data grabbed of the internet.
 
 Add neural network models. 
 
+GUI
+
 ------------------------------------------------------------------------------------------------------------------------------------------------
 Help Wanted:
 
@@ -44,7 +48,7 @@ Later versions will be able to access sql databases and grab data off the web. L
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
-Please feel free to contact me if you have any questions, suggestions, or just shoot want to shoot the shit, shoot me an emails at rralich@gmail.com.
+Please feel free to contact me if you have any questions, suggestions, or just want to shoot the shit, shoot me an email at rralich@gmail.com.
 
 If your in the DC area and don't know about it threre is a Python DCMeetUp group that meets on a regulear basis. Check it out at, http://www.meetup.com/dcpython/
 
