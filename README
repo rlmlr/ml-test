@@ -6,6 +6,8 @@ randomDataPlot.py: Plots positive and negatives features in 2D histograms and pl
 
 mlCodeRandomDataCompare.py: Compares 12 supervised learning algorithms based on several metrics and computes the average of 6 metrics with a range from 0 to 1. Plots ROC and PrecisionRecall curves in 2 figures and plots histogram (barplots) of importance for decision tree based  models.
 
+mlCodeRandoDataTuneParameters.py: Uses cross-validation to find model parameters that give thr highest accuracy score. Cross-validation splits the total data se into K-1 training sets and 1 test set. The test set is tested against each traing site and the average accuracy score is used to find the best model parameters. The next version will have plots of score vs parameter with a standard deviation band. 
+
 mlCodeRandomDataPlots.py: Plots the importance of features for a given algorithm (GradientBoosted). Plots 2D for each feature and 3D for 2 chosen features.
 
 See WIKI for sample plots.
@@ -25,7 +27,7 @@ R.Caruana and A.Niculescu-Mizil. "An empirical comparison of supervised learning
 
 To Do:
 
-Add methods to tune model parameters and test stability of models. (All most done)
+Add methods tod test the stability of models. Do small perturbations in the data cause a large diffference in model output.
 
 Expand random data set allow for more features. Add text and image data. All so, use standard data sets to compare models.
 
