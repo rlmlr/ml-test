@@ -27,13 +27,20 @@ R.Caruana and A.Niculescu-Mizil. "An empirical comparison of supervised learning
 
 To Do:
 
-Add methods tod test the stability of models. Do small perturbations in the data cause a large diffference in model output.
+Add methods to test the stability of models. Do small perturbations in the data see if it causes a large diffference in model output.
 
 Expand random data set allow for more features. Add text and image data. All so, use standard data sets to compare models.
 
 Add internet interface to extract and model data grabbed of the internet.
 
-Add neural network models (need suggesgtions for pyhton module). 
+Add neural network models. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Help Wanted:
+
+Looking for some one can creat GUIs, perhaps in Qt. I think this would be a great open source project where there is not a lot of competition. I can write all the back end Python stuff, just need some one who can write a GUI. I was thinking for the inital version, it takes a .csv file, the user picks a model, the data is converted to a format compadible with scikit-lear. They then run the crooss-validation tuner to optimive their model parameters. Once there model is trained and validated, they can add other .csv files to make predictions. Models can be saved with the module pickle.
+
+Later versions will be able to access sql databases and grab data off the web. Let me know if any one is interested, like I said I only know of one other similar software (http://en.wikipedia.org/wiki/Weka_(machine_learning)). It's written in JAVA and not so easy to use.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
