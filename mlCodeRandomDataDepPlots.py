@@ -1,3 +1,11 @@
+"""
+Created on Mon Sep  2 21:03:57 2013
+
+@author: rlmlr
+email: rralich@gmail.com
+"""
+
+
 from sklearn.ensemble import GradientBoostingClassifier 
 from sklearn.metrics import roc_curve, precision_recall_curve, mean_squared_error, log_loss
 from sklearn.metrics import auc, accuracy_score, recall_score, precision_score, matthews_corrcoef, f1_score
@@ -96,7 +104,7 @@ print cm
 fig1, axs = plot_partial_dependence(clf, train[features], features[0:6], feature_names=names, n_jobs=-1, grid_resolution=50,facecolor='white')
 fig1.suptitle('None')
 pl.subplots_adjust(top=0.9) 
-
+#pl.savefig('/home/rmr/2dImportance.png', bbox_inches=0)
 
 fig2 = pl.figure()
 target_feature = (3, 4)
@@ -108,5 +116,6 @@ surf = ax.plot_surface(XX, YY, Z, rstride=1, cstride=1, cmap=pl.cm.BuPu)
 ax.set_xlabel(names[target_feature[0]])
 ax.set_ylabel(names[target_feature[1]])
 ax.set_zlabel('Partial dependence')
+#pl.savefig('/home/rmr/3dImportance.png', bbox_inches=0)
 
 plt.show()

@@ -1,3 +1,10 @@
+"""
+Created on Mon Sep  2 21:03:57 2013
+
+@author: rlmlr
+email: rralich@gmail.com
+"""
+
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.ensemble import ExtraTreesClassifier, AdaBoostClassifier 
@@ -24,7 +31,7 @@ from itertools import cycle
 target_names = np.array(['Negatives','Positives'])
 
 # Call data frame with Nb (negatives) and Ns (positives)
-dfr = rd.rData(target_names,282679734,5000,1000)
+dfr = rd.rData(target_names,282679734,50000,10000)
 
 # Print first 25 rows of data frame
 print dfr.head(25)
@@ -192,6 +199,6 @@ for i,j in FI:
     plt.title('Variable Importance')
     plt.title(i)
     n += 1
-    #plt.savefig('/tour/path/rfVariableImportance.eps', bbox_inches=0)
+plt.savefig('/home/rmr/rfVariableImportance.png', bbox_inches=0)
 
 plt.show()

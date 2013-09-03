@@ -1,3 +1,11 @@
+"""
+Created on Mon Sep  2 21:03:57 2013
+
+@author: rlmlr
+email: rralich@gmail.com
+"""
+
+
 import pylab as py
 import scipy
 from scipy import stats
@@ -60,44 +68,36 @@ plt.ylim(0,37000)
 plt.subplot(326)
 plt.hist([s6,b6],4,histtype='step')
 plt.title('Quadrary Dist.') 
-#plt.savefig('/home/rmr/randDidst.png', bbox_inches=0)
+plt.savefig('/home/rmr/randDidst.png', bbox_inches=0)
 
 cs12 = scipy.stats.pearsonr(s1,s2)[0]
 cs13 = scipy.stats.pearsonr(s1,s3)[0]
 cs14 = scipy.stats.pearsonr(s1,s4)[0]
 cs15 = scipy.stats.pearsonr(s1,s5)[0]
 cs16 = scipy.stats.pearsonr(s1,s6)[0]
-
 cb12 = scipy.stats.pearsonr(b1,b2)[0]
 cb13 = scipy.stats.pearsonr(b1,b3)[0]
 cb14 = scipy.stats.pearsonr(b1,b4)[0]
 cb15 = scipy.stats.pearsonr(b1,b5)[0]
 cb16 = scipy.stats.pearsonr(b1,b6)[0]
-
 cs23 = scipy.stats.pearsonr(s2,s3)[0]
 cs24 = scipy.stats.pearsonr(s2,s4)[0]
 cs25 = scipy.stats.pearsonr(s2,s5)[0]
 cs26 = scipy.stats.pearsonr(s2,s6)[0]
-
 cb23 = scipy.stats.pearsonr(b2,b3)[0]
 cb24 = scipy.stats.pearsonr(b2,b4)[0]
 cb25 = scipy.stats.pearsonr(b3,b5)[0]
 cb26 = scipy.stats.pearsonr(b3,b6)[0]
-
 cs34 = scipy.stats.pearsonr(s3,s4)[0]
 cs35 = scipy.stats.pearsonr(s3,s5)[0]
 cs36 = scipy.stats.pearsonr(s3,s6)[0]
-
 cb34 = scipy.stats.pearsonr(b3,b4)[0]
 cb35 = scipy.stats.pearsonr(b3,b5)[0]
 cb36 = scipy.stats.pearsonr(b3,b6)[0]
-
 cs45 = scipy.stats.pearsonr(s4,s5)[0]
 cs46 = scipy.stats.pearsonr(s4,s6)[0]
-
 cb45 = scipy.stats.pearsonr(s4,s5)[0]
 cb46 = scipy.stats.pearsonr(b4,b6)[0]
-
 cs56 = scipy.stats.pearsonr(s5,s6)[0]
 cb56 = scipy.stats.pearsonr(b5,b6)[0]
 
@@ -122,6 +122,7 @@ ax.scatter(s1, s5,s=100, c='r', marker="o", alpha=1, label='C_Pos = %0.4f' % cs1
 ax.scatter(b1, b5, s=100,c='b', marker="o", alpha=0.1, label='C_Neg = %0.4f' % cb15)
 plt.title('Normal - Binary')
 plt.legend(loc='upper right')
+plt.savefig('/home/rmr/corr1.png', bbox_inches=0)
 
 fig = plt.figure(3, figsize=(12,12)).patch.set_facecolor('white')
 ax = plt.subplot(221)
@@ -144,6 +145,7 @@ ax.scatter(s2, s5,s=100, c='r', marker="o", alpha=1, label='C_Pos = %0.4f' % cs2
 ax.scatter(b2, b5, s=100,c='b', marker="o", alpha=0.1, label='C_Neg = %0.4f' % cb25)
 plt.title('Gamma - Binary')
 plt.legend(loc='upper right')
+plt.savefig('/home/rmr/corr2', bbox_inches=0)
 
 fig = plt.figure(4, figsize=(12,12)).patch.set_facecolor('white')
 ax = plt.subplot(221)
@@ -166,6 +168,7 @@ ax.scatter(s3, s6,s=100, c='r', marker="o", alpha=1, label='C_Pos = %0.4f' % cs3
 ax.scatter(b3, b6, s=100,c='b', marker="o", alpha=0.1, label='C_Neg = %0.4f' % cb36)
 plt.title('Beta - Quadrary')
 plt.legend(loc='upper right')
+plt.savefig('/home/rmr/corr3.png', bbox_inches=0)
 
 fig = plt.figure(5, figsize=(12,12)).patch.set_facecolor('white')
 ax = plt.subplot(131)
@@ -182,5 +185,6 @@ ax.scatter(s5, s6,s=100, c='r', marker="o", alpha=1, label = 'Positive, C_Pos = 
 ax.scatter(b5, b6, s=100, c='b', marker="o", alpha=0.1, label = 'Negative, C_Neg = %0.4f' % cb56)
 plt.title('Binary - Quadrary')
 plt.legend(loc='upper right')
+plt.savefig('/home/rmr/corr4.png', bbox_inches=0)
 
 plt.show()

@@ -1,3 +1,11 @@
+"""
+Created on Mon Sep  2 21:03:57 2013
+
+@author: rlmlr
+email: rralich@gmail.com
+"""
+
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn import svm, grid_search
