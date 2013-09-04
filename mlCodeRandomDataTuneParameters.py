@@ -52,8 +52,8 @@ print 'Best Estimator = ', clf.best_estimator_
 # -----------------------------------------------------------------------------
 
 param_grid_rfc = [
-  {'n_estimators': [10, 100, 200, 300, 400, 500], 'criterion': ['gini']},
-  {'n_estimators': [10, 100, 200, 300, 400, 500], 'criterion':['entropy']},
+  {'n_estimators': [10, 100, 200, 300, 400, 500], 'criterion': ['gini'], 'max_features':['auto', 'log2', 'None'] },
+  {'n_estimators': [10, 100, 200, 300, 400, 500], 'criterion':['entropy'], 'max_features':['auto', 'log2', 'None']},
   ]
 
 rfc = RandomForestClassifier(random_state=2746298)
