@@ -157,7 +157,7 @@ plt.ylim([0.0, 1.0])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.legend(loc="lower right")
-plt.savefig('/home/rmr/ROC_All.png', bbox_inches=0)
+plt.savefig('/home/ROC_All.png', bbox_inches=0)
 
 # Plot precisionRecall curves for all models in list
 plt.figure(2, figsize=(12,12)).patch.set_facecolor('white')
@@ -169,7 +169,7 @@ plt.ylim([0.0, 1.0])
 plt.xlabel('Precision')
 plt.ylabel('Recall')
 plt.legend(loc="lower left")
-plt.savefig('/home/rmr/PR_ALL.png', bbox_inches=0)
+plt.savefig('/home/PR_ALL.png', bbox_inches=0)
 
 
 # Feature importance plots
@@ -186,6 +186,6 @@ for i,j in FI:
     plt.title('Variable Importance')
     plt.title(i)
     n += 1
-plt.savefig('/home/rmr/FI_All.png', bbox_inches=0)
+plt.savefig('/home/FI_All.png', bbox_inches=0)
 
 plt.show()
