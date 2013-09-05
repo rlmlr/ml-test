@@ -1,5 +1,5 @@
 """
-Created on Mon Sep  2 21:03:57 2013
+Created on Tues Sep  3 21:03:57 2013
 
 @author: rlmlr
 email: rralich@gmail.com
@@ -18,22 +18,23 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.lda import LDA
 from sklearn.qda import QDA
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import randomData as rd
 from itertools import cycle
 
 # -----------------------------------------------------------------------------
-# Load randomly generated data: Training/Testing -----------------------------------
+# Load randomly generated data: Training/Testing ------------------------------
 # -----------------------------------------------------------------------------
 
 # Create 1x2 array of target names
 target_names = np.array(['Positives','Negatives'])
+
 # Call data frame with Nb (negatives) and Ns (positives)
-dfr = rd.rData(target_names,282679734,50000,10000)
+dfr = rd.rData(target_names,282679734,5000,1000)
 
 # Print first 25 rows of data frame
 print dfr.head(25)
+
 # Create training and testing data frame based on value of 'isTrain' column
 train, test = dfr[dfr['isTrain']==True], dfr[dfr['isTrain']==False]
 
@@ -45,53 +46,35 @@ trainTargets = np.array(train['Targets']).astype(int)
 testTargets = np.array(test['Targets']).astype(int)
 
 # -----------------------------------------------------------------------------
-# Models --------------------------------------------
+# Models ----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-# List of model names
-names = [
-    'Naive Bayes', # http://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html#sklearn.naive_bayes.GaussianNB
-    'Decision Tree', # http://scikit-learn.org/stable/modules/tree.html#classification
-    'Random Forest', # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier
-    'Extra Trees', # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html
-    'Gradient Boosting', # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn.ensemble.GradientBoostingClassifier
-    'Logistic Regression', # http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
-    'SVM', # http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
-    'Nearest Neighbors', # http://scikit-learn.org/stable/modules/neighbors.html
-    'LDA', # http://scikit-learn.org/stable/modules/generated/sklearn.lda.LDA.html
-    'QDA', # http://scikit-learn.org/stable/modules/generated/sklearn.qda.QDA.html
-    'Stochastic Gradient', # http://scikit-learn.org/stable/modules/sgd.html#classification
-    'AdaBoost' # http://scikit-learn.org/stable/modules/ensemble.html#adaboost
-    ]
+classifiers = [('Naive Bayes', GaussianNB()), 
+               ('Decision Tree', DecisionTreeClassifier(max_depth=None, min_samples_split=1,random_state=2746298)),
+               ('Random Forest', RandomForestClassifier(n_estimators=300,max_depth=None,n_jobs=-1,random_state=2746298)),
+               ('Extra Trees', ExtraTreesClassifier(n_estimators=300, max_depth=None,min_samples_split=1,random_state=2746298)),
+               ('Gradient Boosting', GradientBoostingClassifier(n_estimators=300,max_depth=1,learning_rate=1.0,random_state=2746298)),
+               ('Logistic Regression', LogisticRegression(random_state=2746298)),
+               ('SVM', svm.SVC(C=1.0, kernel='linear', probability=True)),
+               ('Nearest Neighbors', KNeighborsClassifier(3)),
+               ('LDA', LDA()),
+               ('QDA', QDA()),
+               ('Stochastic Gradient', SGDClassifier(loss="log",n_jobs=-1,random_state=2746298,shuffle=True)),
+               ('AdaBoost', AdaBoostClassifier(n_estimators=100))
+               ]
 
-# List of classifiers coresponding to the model names
-classifiers = [
-    GaussianNB(),
-    RandomForestClassifier(n_estimators=300,max_depth=None,n_jobs=-1,random_state=2746298),
-    LogisticRegression(random_state=2746298),
-    svm.SVC(C=1.0, kernel='linear', probability=True),
-    GradientBoostingClassifier(n_estimators=300,max_depth=1,learning_rate=1.0,random_state=2746298),
-    ExtraTreesClassifier(n_estimators=300, max_depth=None,min_samples_split=1,random_state=2746298),
-    DecisionTreeClassifier(max_depth=None, min_samples_split=1,random_state=2746298),
-    KNeighborsClassifier(3),
-    LDA(),
-    QDA(),
-    SGDClassifier(loss="log",n_jobs=-1,random_state=2746298,shuffle=True),
-    AdaBoostClassifier(n_estimators=100)
-    ]
-
-# Initialize list for ploting
-FP, TP, PR, RC, AVG, SAR, FI = [], [], [], [], [], [], []
+# Initialize list for saving values for plotting
+FP, TP, PR, RC, AVG, SAR, FI, Names = [], [], [], [], [], [], [], []
 
 # Loop over classifiers and calculate metrics
-for name, clf in zip(names, classifiers):
+for name, clf in classifiers:
     y = clf.fit(train[features], trainTargets).predict(train[features])
     y_t = clf.predict(test[features])
     # Probabilities
     prob = clf.predict_proba(test[features])
     # Predictions matched to target names
     preds = target_names[clf.predict(test[features])]
-    # ROC and Precision Recall Curve
+    # ROC and PR Curve
     fpos, tpos, thr = roc_curve(testTargets, prob[:,1])
     pre, rc, thp = precision_recall_curve(testTargets, prob[:,1])
 
@@ -110,7 +93,8 @@ for name, clf in zip(names, classifiers):
     lift = (tp+fp)/(tp+tn+fp+fn)
     recall = recall_score(testTargets, y_t) # tp/(tp+fn)
     prec = precision_score(testTargets, y_t) # tp/(tp+fp)
-    mcorr = matthews_corrcoef(testTargets, y_t) # (tp*tn-fp*fn)/np.sqrt((tp+fp)*(tp+fn)*(tn+fp)*(tn+fn))  
+    #mcorr = matthews_corrcoef(testTargets, y_t) # BROKEN!!!
+    mcorr = (tp*tn-fp*fn)/np.sqrt((tp+fp)*(tp+fn)*(tn+fp)*(tn+fn))  
     f1 = f1_score(testTargets, y_t) # 2*tp/(tp+fn+fp)
     rms = mean_squared_error(testTargets, y_t) # np.sqrt(sum([(float(i)-float(j))**2 for i,j in zip(testTargets, y_t)])/len(y_t))
     ll = log_loss(testTargets, prob) # (y_T=1)log(P(y_T=1)+(1-y_T=0)log(1-P(y_T=0)
@@ -124,7 +108,7 @@ for name, clf in zip(names, classifiers):
 # Print out metrics  
     print name, '---------------------------------------------' 
     print 'Area under ROC Curve = ', roc_auc
-    print 'Area under Precision Recall curve = ', avp
+    print 'Area under PR curve = ', avp
     print 'Accuracy Score = ', acc
     print 'Recall Score = ', recall
     print 'Precision Score = ', prec
@@ -145,11 +129,12 @@ for name, clf in zip(names, classifiers):
     RC.append(rc)
     AVG.append(average)
     SAR.append(sar)
+    Names.append(name)
 
-# Print list of model and corresponding 6 metric average
+# Print list of model and corresponding Average and SAR
 print '--------------------------------------------------------'
 print 'Model','         ', 'Average','         ', 'SAR'
-for k in zip(names,AVG,SAR):
+for k in zip(Names,AVG,SAR):
     print k
 
 # -----------------------------------------------------------------------------
@@ -164,29 +149,27 @@ linecycler = cycle(lines)
 
 # Plot roc curves for all models in list
 plt.figure(1, figsize=(12,12)).patch.set_facecolor('white')
-for i in range(len(names)):
-    plt.plot(FP[i], TP[i],next(linecycler),label=names[i])
+for i in range(len(classifiers)):
+    plt.plot(FP[i], TP[i],next(linecycler),label=Names[i])
 plt.plot([0,1], [0, 1], 'k-.')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.0])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.legend(loc="lower right")
-plt.savefig('roc_compare.png', bbox_inches=0)
-plt.savefig('/your/path/figures/ROC_All.png', bbox_inches=0)
+plt.savefig('/home/rmr/ROC_All.png', bbox_inches=0)
 
 # Plot precisionRecall curves for all models in list
 plt.figure(2, figsize=(12,12)).patch.set_facecolor('white')
-for i in range(len(names)):
-    plt.plot(PR[i], RC[i],next(linecycler),label=names[i])
+for i in range(len(classifiers)):
+    plt.plot(PR[i], RC[i],next(linecycler),label=Names[i])
 plt.plot(0.5*np.ones(len(PR[0])), 'k-.')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.0])
 plt.xlabel('Precision')
 plt.ylabel('Recall')
 plt.legend(loc="lower left")
-plt.savefig('rpcurve.png', bbox_inches=0)
-plt.savefig('/your/path/figures/PR_ALL.png', bbox_inches=0)
+plt.savefig('/home/rmr/PR_ALL.png', bbox_inches=0)
 
 
 # Feature importance plots
@@ -203,6 +186,6 @@ for i,j in FI:
     plt.title('Variable Importance')
     plt.title(i)
     n += 1
-plt.savefig('/your/path/figures/FI_All.png', bbox_inches=0)
+plt.savefig('/home/rmr/FI_All.png', bbox_inches=0)
 
 plt.show()
